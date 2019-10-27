@@ -30,11 +30,13 @@ int main(){
 	tick_delay_micros = MICRO_DECIMAL / TICK_FREQUENCY_HZ;
 	output_delay_micros = MICRO_DECIMAL / OUTPUT_FLANKS_HZ;
 
+	// Outputs real tick frequency
 	int realFrequency = tick_delay_micros * MICRO_DECIMAL;
 	Serial.println("Starting tick clock with ");
 	Serial.print(realFrequency);
 	Serial.print(" Hz.");
 
+	// Outputs real output signal frequency
 	realFrequency = output_delay_micros * MICRO_DECIMAL;
 	Serial.println("Starting output clock with ");
 	Serial.print(realFrequency);
@@ -51,6 +53,7 @@ int main(){
 
 }
 
+// Loop with delta corrected delay
 void loopRun(){
 	while(1){
 		unsigned long start = micros();
@@ -61,23 +64,28 @@ void loopRun(){
 }
 
 void tick(){
+	// Increments light opsition
 	void next();
+	// Writes 8 bit signal to external register
 	void serialOut(uint8_t dataOut);
 }
 
 void next(){
 	switch(currentPos){
 	case 0:
+		// Lower end direction switch
 		void lowerEndSwitch();
 		break;
 	case LIGHT_UNITS - 1:
+		// Upper end direction switch
 		void upperEndSwitch();
 		break;
 	default:
+		// Increments or decrements position depending on direction == UP/DOWN
 		currentPos += (currentDirection == UP ? 1 : -1);
 		break;
 	}
-
+	// Sets the current light position + one bit above/below depending on direction == UP/DOWN
 	dataOut = (1 << currentPos) | (1 << currentPos + (currentDirection == UP ? 1 : -1));
 }
 
