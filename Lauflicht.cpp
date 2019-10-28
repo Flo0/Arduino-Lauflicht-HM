@@ -31,13 +31,17 @@ int main(){
 	output_delay_micros = MICRO_DECIMAL / OUTPUT_FLANKS_HZ;
 
 	// Outputs real tick frequency
-	int realFrequency = tick_delay_micros * MICRO_DECIMAL;
+	double realFrequency = (double) 1.0 / (tick_delay_micros * ((double) 1.0 / 1000000));
+	// 'Rounds' the frequency to one decimal
+	realFrequency = ((int)(realFrequency * 10)) / (double) 10.0;
 	Serial.println("Starting tick clock with ");
 	Serial.print(realFrequency);
 	Serial.print(" Hz.");
 
 	// Outputs real output signal frequency
-	realFrequency = output_delay_micros * MICRO_DECIMAL;
+	realFrequency = (double) 1.0 / (output_delay_micros * ((double) 1.0 / 1000000));
+	// 'Rounds' the frequency to one decimal
+	realFrequency = ((int)(realFrequency * 10)) / (double) 10.0;
 	Serial.println("Starting output clock with ");
 	Serial.print(realFrequency);
 	Serial.print(" Hz.");
