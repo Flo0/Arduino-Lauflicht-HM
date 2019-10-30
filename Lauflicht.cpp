@@ -31,7 +31,7 @@ int main(){
 	output_delay_micros = MICRO_DECIMAL / OUTPUT_FLANKS_HZ;
 
 	// Outputs real tick frequency
-	double realFrequency = (double) 1.0 / (tick_delay_micros * ((double) 1.0 / 1000000));
+	double realFrequency = (double) MICRO_DECIMAL / (double) tick_delay_micros;
 	// 'Rounds' the frequency to one decimal
 	realFrequency = ((int)(realFrequency * 10)) / (double) 10.0;
 	Serial.println("Starting tick clock with ");
@@ -39,7 +39,7 @@ int main(){
 	Serial.print(" Hz.");
 
 	// Outputs real output signal frequency
-	realFrequency = (double) 1.0 / (output_delay_micros * ((double) 1.0 / 1000000));
+	realFrequency = (double) MICRO_DECIMAL / (double) output_delay_micros;
 	// 'Rounds' the frequency to one decimal
 	realFrequency = ((int)(realFrequency * 10)) / (double) 10.0;
 	Serial.println("Starting output clock with ");
@@ -68,7 +68,7 @@ void loopRun(){
 }
 
 void tick(){
-	// Increments light opsition
+	// Increments light position
 	void next();
 	// Writes 8 bit signal to external register
 	void serialOut(uint8_t dataOut);
